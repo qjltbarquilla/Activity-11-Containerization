@@ -1,0 +1,29 @@
+---
+
+- name: Build Docker image for web (Apache) and DB (MariaDB) server
+  hosts: server1
+  become: true
+  tasks:
+
+    - name: Ensure Docker SDK for Python is installed
+      pip:
+        name: docker
+        state: present
+
+    - name: Copy Docker file to server1
+      copy:
+        src: /home/qjltbarquilla/Activity-11-Containerization/Docker_File/  # Path on the control machine
+        dest: /home/qjltbarquilla/Activity-11-Containerization/Docker_File/  # Destination path on server1
+        owner: qjltbarquilla  # Ensure the owner is set if needed
+        mode: '0755'  # Set appropriate permissions if needed
+
+    - name: Build Docker image
+      docker_image:
+        source: build  # Explicitly specify the source type
+        build:
+          path: /home/qjltbarquilla/Activity-11-Containerization/Docker_File  # Ensure this path is correct
+          dockerfile: Dockerfile  # Ensure this points to the new Dockerfile
+          pull: yes  # Pull the base image
+        name: my_web_db_server
+        tag: latest
+        state: present
