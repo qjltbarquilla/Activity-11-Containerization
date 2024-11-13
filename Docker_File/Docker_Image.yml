@@ -12,18 +12,18 @@
 
     - name: Copy Docker file to server1
       copy:
-        src: /home/qjltbarquilla/Activity-11-Containerization/Docker_File/  # Path on the control machine
-        dest: /home/qjltbarquilla/Activity-11-Containerization/Docker_File/  # Destination path on server1
-        owner: qjltbarquilla  # Ensure the owner is set if needed
-        mode: '0755'  # Set appropriate permissions if needed
+        src: /home/qjltbarquilla/Activity-11-Containerization/Docker_File/
+        dest: /home/qjltbarquilla/Activity-11-Containerization/Docker_File/
+        owner: qjltbarquilla
+        mode: '0755'
 
     - name: Build Docker image
       docker_image:
-        source: build  # Explicitly specify the source type
+        source: build
         build:
-          path: /home/qjltbarquilla/Activity-11-Containerization/Docker_File  # Ensure this path is correct
-          dockerfile: Dockerfile  # Ensure this points to the new Dockerfile
-          pull: yes  # Pull the base image
+          path: /home/qjltbarquilla/Activity-11-Containerization/Docker_File
+          dockerfile: Dockerfile
+          pull: yes
         name: my_web_db_server
         tag: latest
         state: present
